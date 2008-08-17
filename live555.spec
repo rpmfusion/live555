@@ -16,7 +16,6 @@ Patch0:		http://ftp.debian.org/debian/pool/main/libl/liblivemedia/liblivemedia_2
 Patch1:		live.2008.02.08-shared.patch
 Patch2:		live.2008.04.03-reorder.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires:	findutils
 
 %description
 This code forms a set of C++ libraries for multimedia streaming, 
@@ -144,9 +143,35 @@ for i in BasicUsageEnvironment groupsock liveMedia UsageEnvironment ; do
   ln -sf lib${i}.so.%{date} $RPM_BUILD_ROOT%{_libdir}/lib${i}.so
 done
 
-for i in mediaServer/live555MediaServer `find testProgs -type f -perm 755` ; do
+install -pm755 mediaServer/live555MediaServer $RPM_BUILD_ROOT%{_bindir}
+
+pushd testProgs
+for i in \
+  MPEG2TransportStreamIndexer \
+  openRTSP \
+  playSIP \
+  sapWatch \
+  testAMRAudioStreamer \
+  testMP3Receiver \
+  testMP3Streamer \
+  testMPEG1or2AudioVideoStreamer \
+  testMPEG1or2AudioVideoToDarwin \
+  testMPEG1or2ProgramToTransportStream \
+  testMPEG1or2Splitter \
+  testMPEG1or2VideoReceiver \
+  testMPEG1or2VideoStreamer \
+  testMPEG2TransportStreamTrickPlay \
+  testMPEG2TransportStreamer \
+  testMPEG4VideoStreamer \
+  testMPEG4VideoToDarwin \
+  testOnDemandRTSPServer \
+  testRelay \
+  testWAVAudioStreamer \
+  vobStreamer \
+; do
   install -pm755 $i $RPM_BUILD_ROOT%{_bindir}
 done
+popd
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -192,7 +217,7 @@ rm -rf $RPM_BUILD_ROOT
 - specfile whitespace cosmetics
 - made tools depend on specific version until we have a stable ABI
 - added proper obsoletes/provides to devel
-- added findutils BR (missing find caused -tools to lack most of the binaries)
+- made -tools binaries installation independent of umask
 
 * Mon May  5 2008 kwizart < kwizart at gmail.com > - 0-0.19.2008.04.03
 - Rename package from live to live555 
