@@ -1,0 +1,17 @@
+diff -up live/Makefile.tail.reorder live/Makefile.tail
+--- live/Makefile.tail.reorder	2008-04-24 01:42:06.000000000 +0200
++++ live/Makefile.tail	2008-04-24 01:48:48.000000000 +0200
+@@ -15,10 +15,10 @@ TESTPROGS_APP = $(TESTPROGS_DIR)/testMP3
+ MEDIA_SERVER_DIR = mediaServer
+ MEDIA_SERVER_APP = $(MEDIA_SERVER_DIR)/mediaServer$(EXE)
+ 
+-ALL =	$(LIVEMEDIA_LIB) \
+-	$(GROUPSOCK_LIB) \
++ALL =	$(BASIC_USAGE_ENVIRONMENT_LIB) \
+ 	$(USAGE_ENVIRONMENT_LIB) \
+-	$(BASIC_USAGE_ENVIRONMENT_LIB) \
++	$(GROUPSOCK_LIB) \
++	$(LIVEMEDIA_LIB) \
+ 	$(TESTPROGS_APP) \
+ 	$(MEDIA_SERVER_APP)
+ all:	$(ALL)
