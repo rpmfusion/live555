@@ -3,7 +3,7 @@
 
 Name:		live555
 Version:	0
-Release:	0.20.%{date}%{?dist}
+Release:	0.21.%{date}%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
@@ -211,6 +211,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libUsageEnvironment*.a
 
 %changelog
+* Sun Mar 29 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 0-0.21.2008.07.25
+- rebuild for new F11 features
+
 * Sun Aug 17 2008 Dominik Mierzejewski <rpm[AT]greysector.net> - 0-0.20.2008.07.25
 - 2008.07.25
 - devel-static -> static, per Fedora guidelines
