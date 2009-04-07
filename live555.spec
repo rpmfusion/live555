@@ -1,9 +1,9 @@
-%define		date	2008.07.25
+%define		date	2009.04.07
 %define		live_soversion 0
 
 Name:		live555
 Version:	0
-Release:	0.21.%{date}%{?dist}
+Release:	0.22.%{date}%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
@@ -12,7 +12,7 @@ URL:		http://live555.com/liveMedia/
 Source0:	http://live555.com/liveMedia/public/live.%{date}.tar.gz
 # http://live555.com/liveMedia/public/changelog.txt
 Source1:	changelog.txt
-Patch0:		http://ftp.debian.org/debian/pool/main/libl/liblivemedia/liblivemedia_2007.02.20-2.diff.gz
+Patch0:		http://ftp.debian.org/debian/pool/main/libl/liblivemedia/liblivemedia_2008.07.25-2.diff.gz
 Patch1:		live.2008.02.08-shared.patch
 Patch2:		live.2008.04.03-reorder.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -85,8 +85,6 @@ developing applications that use %{name}.
 %patch0 -p1
 patch -p1 -i debian/patches/010_propagate_cflags.diff
 patch -p1 -i debian/patches/010_proper_link_order.diff
-patch -p1 -i debian/patches/010_static_link.diff
-patch -p1 -i debian/patches/020_cxx_headers.diff
 patch -p1 -i debian/patches/020_invalid_casts.diff
 patch -p1 -i debian/patches/021_ip_mreq_source.diff
 cp -p %{SOURCE1} .
@@ -211,6 +209,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libUsageEnvironment*.a
 
 %changelog
+* Tue Apr 07 2009 Dominik Mierzejewski <rpm[AT]greysector.net> - 0-0.22.2009.04.07
+- 2009.04.07
+- use new debian patchset
+
 * Sun Mar 29 2009 Thorsten Leemhuis <fedora [AT] leemhuis [DOT] info> - 0-0.21.2008.07.25
 - rebuild for new F11 features
 

@@ -1,16 +1,16 @@
-diff -up live/config.linux.shared live/config.linux
---- live/config.linux.shared	2008-04-23 17:09:41.000000000 +0200
-+++ live/config.linux	2008-04-23 17:12:00.000000000 +0200
+diff -up live/config.linux.static live/config.linux
+--- live/config.linux.static	2009-04-07 20:48:47.000000000 +0200
++++ live/config.linux	2009-04-07 20:50:46.000000000 +0200
 @@ -9,9 +9,9 @@ OBJ =			o
  LINK =			c++ -o
  LINK_OPTS =		-L.
  CONSOLE_LINK_OPTS =	$(LINK_OPTS)
--LIBRARY_LINK =		ar rcvu 
--LIBRARY_LINK_OPTS =	
+-LIBRARY_LINK =		ld -o
+-LIBRARY_LINK_OPTS =	$(LINK_OPTS) -r -Bstatic
 -LIB_SUFFIX =			a
-+LIBRARY_LINK =		$(CC) -o 
++LIBRARY_LINK =		$(CC) -o
 +LIBRARY_LINK_OPTS =	$(LINK_OPTS) -shared -Wl,-soname,$@.$(SO_VERSION) $(LIBADDS)
-+LIB_SUFFIX =			so
++LIB_SUFFIX =		so
  LIBS_FOR_CONSOLE_APPLICATION =
  LIBS_FOR_GUI_APPLICATION =
  EXE =
