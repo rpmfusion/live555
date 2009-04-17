@@ -1,0 +1,107 @@
+diff -uNr live/config.linux live-patches/config.linux
+--- live/config.linux	2009-03-22 23:26:16.000000000 +0100
++++ live-patches/config.linux	2009-03-24 14:10:56.000000000 +0100
+@@ -1,4 +1,4 @@
+-COMPILE_OPTS =		$(INCLUDES) -I. -O2 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64
++COMPILE_OPTS =		$(INCLUDES) -I. $(CFLAGS) -DBSD=1 -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64
+ C =			c
+ C_COMPILER =		cc
+ C_FLAGS =		$(COMPILE_OPTS)
+@@ -9,9 +9,9 @@
+ LINK =			c++ -o
+ LINK_OPTS =		-L.
+ CONSOLE_LINK_OPTS =	$(LINK_OPTS)
+-LIBRARY_LINK =		ld -o
+-LIBRARY_LINK_OPTS =	$(LINK_OPTS) -r -Bstatic
+-LIB_SUFFIX =			a
++LIBRARY_LINK =		$(CC) -o 
++LIBRARY_LINK_OPTS =	$(LINK_OPTS) -shared -Wl,-soname,$@.$(SO_VERSION) $(LIBADDS)
++LIB_SUFFIX =			so
+ LIBS_FOR_CONSOLE_APPLICATION =
+ LIBS_FOR_GUI_APPLICATION =
+ EXE =
+diff -uNr live/config.linux.static live-patches/config.linux.static
+--- live/config.linux.static	1970-01-01 01:00:00.000000000 +0100
++++ live-patches/config.linux.static	2009-03-24 14:10:56.000000000 +0100
+@@ -0,0 +1,17 @@
++COMPILE_OPTS =		$(INCLUDES) -I. $(CFLAGS) -DSOCKLEN_T=socklen_t -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64
++C =			c
++C_COMPILER =		cc
++C_FLAGS =		$(COMPILE_OPTS)
++CPP =			cpp
++CPLUSPLUS_COMPILER =	c++
++CPLUSPLUS_FLAGS =	$(COMPILE_OPTS) -Wall -DBSD=1
++OBJ =			o
++LINK =			c++ -o
++LINK_OPTS =		-L.
++CONSOLE_LINK_OPTS =	$(LINK_OPTS)
++LIBRARY_LINK =		ar rcvu 
++LIBRARY_LINK_OPTS =	
++LIB_SUFFIX =			a
++LIBS_FOR_CONSOLE_APPLICATION =
++LIBS_FOR_GUI_APPLICATION =
++EXE =
+diff -uNr live/Makefile.tail live-patches/Makefile.tail
+--- live/Makefile.tail	2009-03-22 23:26:16.000000000 +0100
++++ live-patches/Makefile.tail	2009-03-24 14:10:56.000000000 +0100
+@@ -15,27 +15,27 @@
+ MEDIA_SERVER_DIR = mediaServer
+ MEDIA_SERVER_APP = $(MEDIA_SERVER_DIR)/mediaServer$(EXE)
+ 
+-ALL =	$(LIVEMEDIA_LIB) \
+-	$(GROUPSOCK_LIB) \
++ALL =	$(BASIC_USAGE_ENVIRONMENT_LIB) \
+ 	$(USAGE_ENVIRONMENT_LIB) \
+-	$(BASIC_USAGE_ENVIRONMENT_LIB) \
++	$(GROUPSOCK_LIB) \
++	$(LIVEMEDIA_LIB) \
+ 	$(TESTPROGS_APP) \
+ 	$(MEDIA_SERVER_APP)
+ all:	$(ALL)
+ 
+ 
+ $(LIVEMEDIA_LIB):
+-	cd $(LIVEMEDIA_DIR) ; $(MAKE)
++	cd $(LIVEMEDIA_DIR) ; CFLAGS="$(CFLAGS)" $(MAKE)
+ $(GROUPSOCK_LIB):
+-	cd $(GROUPSOCK_DIR) ; $(MAKE)
++	cd $(GROUPSOCK_DIR) ; CFLAGS="$(CFLAGS)" $(MAKE)
+ $(USAGE_ENVIRONMENT_LIB):
+-	cd $(USAGE_ENVIRONMENT_DIR) ; $(MAKE)
++	cd $(USAGE_ENVIRONMENT_DIR) ; CFLAGS="$(CFLAGS)" $(MAKE)
+ $(BASIC_USAGE_ENVIRONMENT_LIB):
+-	cd $(BASIC_USAGE_ENVIRONMENT_DIR) ; $(MAKE)
++	cd $(BASIC_USAGE_ENVIRONMENT_DIR) ; CFLAGS="$(CFLAGS)" $(MAKE)
+ $(TESTPROGS_APP): $(LIVEMEDIA_LIB) $(GROUPSOCK_LIB) $(USAGE_ENVIRONMENT_LIB) $(BASIC_USAGE_ENVIRONMENT_LIB)
+-	cd $(TESTPROGS_DIR) ; $(MAKE)
++	cd $(TESTPROGS_DIR) ; CFLAGS="$(CFLAGS)" $(MAKE)
+ $(MEDIA_SERVER_APP): $(LIVEMEDIA_LIB) $(GROUPSOCK_LIB) $(USAGE_ENVIRONMENT_LIB) $(BASIC_USAGE_ENVIRONMENT_LIB)
+-	cd $(MEDIA_SERVER_DIR) ; $(MAKE)
++	cd $(MEDIA_SERVER_DIR) ; CFLAGS="$(CFLAGS)" $(MAKE)
+ 
+ clean:
+ 	cd $(LIVEMEDIA_DIR) ; $(MAKE) clean
+diff -uNr live/mediaServer/Makefile.tail live-patches/mediaServer/Makefile.tail
+--- live/mediaServer/Makefile.tail	2009-03-22 23:26:16.000000000 +0100
++++ live-patches/mediaServer/Makefile.tail	2009-03-24 14:10:56.000000000 +0100
+@@ -25,7 +25,7 @@
+ GROUPSOCK_DIR = ../groupsock
+ GROUPSOCK_LIB = $(GROUPSOCK_DIR)/libgroupsock.$(LIB_SUFFIX)
+ LOCAL_LIBS =	$(LIVEMEDIA_LIB) $(GROUPSOCK_LIB) \
+-		$(USAGE_ENVIRONMENT_LIB) $(BASIC_USAGE_ENVIRONMENT_LIB)
++		$(BASIC_USAGE_ENVIRONMENT_LIB) $(USAGE_ENVIRONMENT_LIB)
+ LIBS =			$(LOCAL_LIBS) $(LIBS_FOR_CONSOLE_APPLICATION)
+ 
+ live555MediaServer$(EXE):	$(MEDIA_SERVER_OBJS) $(LOCAL_LIBS)
+diff -uNr live/testProgs/Makefile.tail live-patches/testProgs/Makefile.tail
+--- live/testProgs/Makefile.tail	2009-03-22 23:26:16.000000000 +0100
++++ live-patches/testProgs/Makefile.tail	2009-03-24 14:10:56.000000000 +0100
+@@ -59,7 +59,7 @@
+ GROUPSOCK_DIR = ../groupsock
+ GROUPSOCK_LIB = $(GROUPSOCK_DIR)/libgroupsock.$(LIB_SUFFIX)
+ LOCAL_LIBS =	$(LIVEMEDIA_LIB) $(GROUPSOCK_LIB) \
+-		$(USAGE_ENVIRONMENT_LIB) $(BASIC_USAGE_ENVIRONMENT_LIB)
++		$(BASIC_USAGE_ENVIRONMENT_LIB) $(USAGE_ENVIRONMENT_LIB)
+ LIBS =			$(LOCAL_LIBS) $(LIBS_FOR_CONSOLE_APPLICATION)
+ 
+ testMP3Streamer$(EXE):	$(MP3_STREAMER_OBJS) $(LOCAL_LIBS)

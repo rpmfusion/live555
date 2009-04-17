@@ -3,18 +3,14 @@
 
 Name:		live555
 Version:	0
-Release:	0.22.%{date}%{?dist}
+Release:	0.23.%{date}%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
 License:	LGPLv2+
 URL:		http://live555.com/liveMedia/
 Source0:	http://live555.com/liveMedia/public/live.%{date}.tar.gz
-# http://live555.com/liveMedia/public/changelog.txt
-Source1:	changelog.txt
-Patch0:		http://ftp.debian.org/debian/pool/main/libl/liblivemedia/liblivemedia_2008.07.25-2.diff.gz
-Patch1:		live.2008.02.08-shared.patch
-Patch2:		live.2008.04.03-reorder.patch
+Patch0:		live.2009.03.22-unified.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %description
@@ -82,14 +78,7 @@ developing applications that use %{name}.
 
 %prep
 %setup -q -n live
-%patch0 -p1
-patch -p1 -i debian/patches/010_propagate_cflags.diff
-patch -p1 -i debian/patches/010_proper_link_order.diff
-patch -p1 -i debian/patches/020_invalid_casts.diff
-patch -p1 -i debian/patches/021_ip_mreq_source.diff
-cp -p %{SOURCE1} .
-%patch1 -p1 -b .static
-%patch2 -p1 -b .reorder
+%patch0 -p1 -b .unified
 
 %build
 ./genMakefiles %{_target_os}.static
@@ -191,7 +180,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(-,root,root,-)
-%doc COPYING README changelog.txt
+%doc COPYING README
 %{_libdir}/libBasicUsageEnvironment.so
 %{_libdir}/libgroupsock.so
 %{_libdir}/libliveMedia.so
@@ -209,6 +198,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libUsageEnvironment*.a
 
 %changelog
+* Fri Apr 17 2009 kwizart < kwizart at gmail.com > - 0-0.23.2009.04.07
+- Unified patches. (unrelevant fixes dropped).
+
 * Tue Apr 07 2009 Dominik Mierzejewski <rpm[AT]greysector.net> - 0-0.22.2009.04.07
 - 2009.04.07
 - use new debian patchset
