@@ -1,9 +1,9 @@
-%define		date	2009.04.07
+%define		date	2009.07.28
 %define		live_soversion 0
 
 Name:		live555
 Version:	0
-Release:	0.23.%{date}%{?dist}
+Release:	0.24.%{date}%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
@@ -82,40 +82,12 @@ developing applications that use %{name}.
 
 %build
 ./genMakefiles %{_target_os}.static
-make %{?_smp_mflags} CFLAGS="$RPM_OPT_FLAGS -fPIC -DPIC"
-rename .a _pic.a */*.a
-mv $(find BasicUsageEnvironment groupsock liveMedia UsageEnvironment -name "*.a" ) $(pwd)
-make clean
 make %{?_smp_mflags} CFLAGS="$RPM_OPT_FLAGS"
 mv $(find BasicUsageEnvironment groupsock liveMedia UsageEnvironment -name "*.a" ) $(pwd)
 make clean
-# Hack to prevent undefined-non-weak-symbol
-for i in groupsock liveMedia ; do
-  pushd $i
-  LIBADD="-lstdc++ -lpthread"
-  for j in BasicUsageEnvironment groupsock liveMedia UsageEnvironment ; do
-    if [ $(grep $j Makefile.head |wc -l) = 1 ] ; then
-      LIBADD="$LIBADD -L../${j} -l${j}"
-    fi
-  done
-  echo -e LIBADDS = " $LIBADD " >> Makefile.head
-  popd
-  pushd UsageEnvironment
-    echo -e LIBADDS = -lstdc++ -L../BasicUsageEnvironment -lBasicUsageEnvironment >> Makefile.head
-  popd
-  pushd BasicUsageEnvironment
-    echo -e LIBADDS = -lstdc++ -lpthread  >> Makefile.head
-  popd
-done
+
 ./genMakefiles %{_target_os}
 make CFLAGS="$RPM_OPT_FLAGS -fPIC -DPIC" SO_VERSION="%{live_soversion}"
-
-# Hack to fix the circle dependency - we leave the safe parallele work here.
-pushd BasicUsageEnvironment
-rm *.so
-make CFLAGS="$RPM_OPT_FLAGS -fPIC -DPIC" SO_VERSION="%{live_soversion}" \
-    LIBADDS="-lstdc++ -lpthread -L../UsageEnvironment -lUsageEnvironment"
-popd
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -124,7 +96,6 @@ for i in BasicUsageEnvironment groupsock liveMedia UsageEnvironment ; do
   install -dm 755 $RPM_BUILD_ROOT%{_includedir}/$i
   install -pm 644 $i/include/*.h* $RPM_BUILD_ROOT%{_includedir}/$i/
   install -pm 644 lib${i}.a $RPM_BUILD_ROOT%{_libdir}/lib${i}.a
-  install -pm 644 lib${i}_pic.a $RPM_BUILD_ROOT%{_libdir}/lib${i}_pic.a
   install -pm 755 $i/lib${i}.so $RPM_BUILD_ROOT%{_libdir}/lib${i}.so.%{date}
   ln -sf lib${i}.so.%{date} $RPM_BUILD_ROOT%{_libdir}/lib${i}.so.%{live_soversion}
   ln -sf lib${i}.so.%{date} $RPM_BUILD_ROOT%{_libdir}/lib${i}.so
@@ -198,6 +169,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libUsageEnvironment*.a
 
 %changelog
+* Mon Aug 17 2009 kwizart < kwizart at gmail.com > - 0-0.24.2009.07.28
+- 2009.07.28
+- Revert circle dependency (prefer undefined non_weak_symbol)
+- Disable static libraries compiled with fpic.
+- Use c++ to link - BZ #564
+
 * Fri Apr 17 2009 kwizart < kwizart at gmail.com > - 0-0.23.2009.04.07
 - Unified patches. (unrelevant fixes dropped).
 
