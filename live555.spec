@@ -1,16 +1,16 @@
-%define		date	2009.07.28
-%define		live_soversion 0
+%global		date	2010.01.16
+%global		live_soversion 0
 
 Name:		live555
 Version:	0
-Release:	0.24.%{date}%{?dist}
+Release:	0.25.%{date}%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
 License:	LGPLv2+
 URL:		http://live555.com/liveMedia/
 Source0:	http://live555.com/liveMedia/public/live.%{date}.tar.gz
-Patch0:		live.2009.03.22-unified.patch
+Patch0:		live.2010.01.16-shared.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %description
@@ -78,7 +78,9 @@ developing applications that use %{name}.
 
 %prep
 %setup -q -n live
-%patch0 -p1 -b .unified
+install -pm 0644 config.linux config.linux.static
+%patch0 -p1 -b .shared
+
 
 %build
 ./genMakefiles %{_target_os}.static
@@ -169,6 +171,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libUsageEnvironment*.a
 
 %changelog
+* Sat Jan 16 2010 Nicolas Chauvet <kwizart@fedoraprojec.org> - 0-0.25.2010.01.16
+- Update to 2010.01.16
+- Update patch for shared library
+
 * Mon Aug 17 2009 kwizart < kwizart at gmail.com > - 0-0.24.2009.07.28
 - 2009.07.28
 - Revert circle dependency (prefer undefined non_weak_symbol)
