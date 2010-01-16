@@ -171,7 +171,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libUsageEnvironment*.a
 
 %changelog
-* Sat Jan 16 2010 Nicolas Chauvet <kwizart@fedoraprojec.org> - 0-0.25.2010.01.16
+* Sat Jan 16 2010 Nicolas Chauvet <kwizart@fedoraproject.org> - 0-0.25.2010.01.16
 - Update to 2010.01.16
 - Update patch for shared library
 
