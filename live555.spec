@@ -1,9 +1,9 @@
-%global		date	2010.01.16
+%global		date	2010.01.22
 %global		live_soversion 0
 
 Name:		live555
 Version:	0
-Release:	0.25.%{date}%{?dist}
+Release:	0.26.%{date}%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
@@ -171,6 +171,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libUsageEnvironment*.a
 
 %changelog
+* Thu Jan 28 2010 Nicolas Chauvet <kwizart@fedoraproject.org> - 0-0.26.2010.01.22
+- Update to 2010.01.22
+  Fix multicast with openRTSP
+
 * Sat Jan 16 2010 Nicolas Chauvet <kwizart@fedoraproject.org> - 0-0.25.2010.01.16
 - Update to 2010.01.16
 - Update patch for shared library
