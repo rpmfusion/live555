@@ -1,16 +1,20 @@
-%global		date	2010.01.22
+%global		date	2010.04.09
 %global		live_soversion 0
 
 Name:		live555
 Version:	0
-Release:	0.26.%{date}%{?dist}
+Release:	0.27.%{date}%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
-License:	LGPLv2+
+License:	LGPLv2+ and GPLv2+
 URL:		http://live555.com/liveMedia/
 Source0:	http://live555.com/liveMedia/public/live.%{date}.tar.gz
 Patch0:		live.2010.01.16-shared.patch
+#Thoses patches are Copyright Rémi Denis-Courmont - provided as GPLv2+
+Patch1:         live-getaddrinfo.patch
+Patch2:         live-inet_ntop.patch
+Patch3:         live-uselocale.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %description
@@ -80,6 +84,9 @@ developing applications that use %{name}.
 %setup -q -n live
 install -pm 0644 config.linux config.linux.static
 %patch0 -p1 -b .shared
+%patch1 -p1 -b .vlc1
+%patch2 -p1 -b .vlc2
+%patch3 -p1 -b .vlc3
 
 
 %build
@@ -171,6 +178,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libUsageEnvironment*.a
 
 %changelog
+* Sat May  1 2010 Nicolas Chauvet <kwizart@fedoraproject.org> - 0-0.27.2010.04.09
+- Update to 2010.04.09
+- Add patches from Rémi Denis-Courmont - provided as GPLv2+
+- Distribute live555 as GPLv2+
+
 * Thu Jan 28 2010 Nicolas Chauvet <kwizart@fedoraproject.org> - 0-0.26.2010.01.22
 - Update to 2010.01.22
   Fix multicast with openRTSP
