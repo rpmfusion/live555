@@ -1,9 +1,9 @@
-%global		date	2010.04.09
+%global		date	2011.01.24
 %global		live_soversion 0
 
 Name:		live555
 Version:	0
-Release:	0.27.%{date}%{?dist}
+Release:	0.29.%{date}%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
@@ -16,6 +16,11 @@ Patch1:         live-getaddrinfo.patch
 Patch2:         live-inet_ntop.patch
 Patch3:         live-uselocale.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
+Provides: live555%{_isa} = %{date}
+# Packages using live555 must Requires this:
+#{?live555date:Requires: live555%{_isa} = %{live555date}}
+
 
 %description
 This code forms a set of C++ libraries for multimedia streaming, 
@@ -140,6 +145,15 @@ for i in \
 done
 popd
 
+#RPM Macros support
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/rpm
+cat > $RPM_BUILD_ROOT%{_sysconfdir}/rpm/macros.live555 << EOF
+# live555 RPM Macros
+%live555date	%{date}
+EOF
+touch -r COPYING $RPM_BUILD_ROOT%{_sysconfdir}/rpm/macros.live555
+
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -161,6 +175,7 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(-,root,root,-)
 %doc COPYING README
+%config %{_sysconfdir}/rpm/macros.live555
 %{_libdir}/libBasicUsageEnvironment.so
 %{_libdir}/libgroupsock.so
 %{_libdir}/libliveMedia.so
@@ -178,6 +193,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libUsageEnvironment*.a
 
 %changelog
+* Mon Jan 24 2011 Nicolas Chauvet <kwizart@gmail.com> - 0-0.29.2011.01.24
+- Update to 2011.01.24
+- Update live555 patches from Rémi.
+
+* Tue Jun 22 2010 Nicolas Chauvet <kwizart@gmail.com> - 0-0.28.2010.06.22
+- Update to 2010.06.22
+
 * Sat May  1 2010 Nicolas Chauvet <kwizart@fedoraproject.org> - 0-0.27.2010.04.09
 - Update to 2010.04.09
 - Add patches from Rémi Denis-Courmont - provided as GPLv2+
