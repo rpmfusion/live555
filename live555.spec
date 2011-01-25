@@ -3,7 +3,7 @@
 
 Name:		live555
 Version:	0
-Release:	0.29.%{date}%{?dist}
+Release:	0.30.%{date}%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
@@ -17,9 +17,9 @@ Patch2:         live-inet_ntop.patch
 Patch3:         live-uselocale.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-Provides: live555%{_isa} = %{date}
+Provides: live555date%{_isa} = %{date}
 # Packages using live555 must Requires this:
-#{?live555date:Requires: live555%{_isa} = %{live555date}}
+#{?live555date:Requires: live555date%{_isa} = %{live555date}}
 
 
 %description
@@ -193,9 +193,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libUsageEnvironment*.a
 
 %changelog
-* Mon Jan 24 2011 Nicolas Chauvet <kwizart@gmail.com> - 0-0.29.2011.01.24
+* Tue Jan 25 2011 Nicolas Chauvet <kwizart@gmail.com> - 0-0.30.2011.01.24
 - Update to 2011.01.24
 - Update live555 patches from Rémi.
+- Use RPM macro to workaround inconsistent ABI dependency.
 
 * Tue Jun 22 2010 Nicolas Chauvet <kwizart@gmail.com> - 0-0.28.2010.06.22
 - Update to 2010.06.22
