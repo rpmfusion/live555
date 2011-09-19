@@ -1,0 +1,163 @@
+diff -up live/BasicUsageEnvironment/BasicHashTable.cpp.vlc3 live/BasicUsageEnvironment/BasicHashTable.cpp
+--- live/BasicUsageEnvironment/BasicHashTable.cpp.vlc3	2011-09-02 22:52:41.000000000 +0200
++++ live/BasicUsageEnvironment/BasicHashTable.cpp	2011-09-19 23:20:03.696255717 +0200
+@@ -26,6 +26,7 @@ along with this library; if not, write t
+ #endif
+ #include <string.h>
+ #include <stdio.h>
++#include <stdint.h>
+ 
+ // When there are this many entries per bucket, on average, rebuild
+ // the table to increase the number of buckets
+@@ -253,17 +254,17 @@ void BasicHashTable::rebuild() {
+ }
+ 
+ unsigned BasicHashTable::hashIndexFromKey(char const* key) const {
+-  unsigned result = 0;
++  uintptr_t result = 0;
+ 
+   if (fKeyType == STRING_HASH_KEYS) {
+     while (1) {
+       char c = *key++;
+       if (c == 0) break;
+-      result += (result<<3) + (unsigned)c;
++      result += (result<<3) + (uintptr_t)c;
+     }
+     result &= fMask;
+   } else if (fKeyType == ONE_WORD_HASH_KEYS) {
+-    result = randomIndex((unsigned long)key);
++    result = randomIndex((uintptr_t)key);
+   } else {
+     unsigned* k = (unsigned*)key;
+     unsigned long sum = 0;
+diff -up live/BasicUsageEnvironment/BasicTaskScheduler0.cpp.vlc3 live/BasicUsageEnvironment/BasicTaskScheduler0.cpp
+--- live/BasicUsageEnvironment/BasicTaskScheduler0.cpp.vlc3	2011-09-02 22:52:41.000000000 +0200
++++ live/BasicUsageEnvironment/BasicTaskScheduler0.cpp	2011-09-19 23:20:03.697255868 +0200
+@@ -19,6 +19,7 @@ along with this library; if not, write t
+ 
+ #include "BasicUsageEnvironment0.hh"
+ #include "HandlerSet.hh"
++#include <stdint.h>
+ 
+ ////////// A subclass of DelayQueueEntry,
+ //////////     used to implement BasicTaskScheduler0::scheduleDelayedTask()
+@@ -68,7 +69,7 @@ TaskToken BasicTaskScheduler0::scheduleD
+ }
+ 
+ void BasicTaskScheduler0::unscheduleDelayedTask(TaskToken& prevTask) {
+-  DelayQueueEntry* alarmHandler = fDelayQueue.removeEntry((long)prevTask);
++  DelayQueueEntry* alarmHandler = fDelayQueue.removeEntry((intptr_t)prevTask);
+   prevTask = NULL;
+   delete alarmHandler;
+ }
+diff -up live/BasicUsageEnvironment/include/BasicHashTable.hh.vlc3 live/BasicUsageEnvironment/include/BasicHashTable.hh
+--- live/BasicUsageEnvironment/include/BasicHashTable.hh.vlc3	2011-09-02 22:52:41.000000000 +0200
++++ live/BasicUsageEnvironment/include/BasicHashTable.hh	2011-09-19 23:20:03.701256472 +0200
+@@ -24,6 +24,8 @@ along with this library; if not, write t
+ #include "HashTable.hh"
+ #endif
+ 
++#include <stdint.h>
++
+ // A simple hash table implementation, inspired by the hash table
+ // implementation used in Tcl 7.6: <http://www.tcl.tk/>
+ 
+@@ -87,7 +89,7 @@ private:
+   unsigned hashIndexFromKey(char const* key) const;
+     // used to implement many of the routines above
+ 
+-  unsigned randomIndex(unsigned long i) const {
++  unsigned randomIndex(uintptr_t i) const {
+     return (((i*1103515245) >> fDownShift) & fMask);
+   }
+ 
+diff -up live/groupsock/Groupsock.cpp.vlc3 live/groupsock/Groupsock.cpp
+--- live/groupsock/Groupsock.cpp.vlc3	2011-09-19 23:20:03.690254809 +0200
++++ live/groupsock/Groupsock.cpp	2011-09-19 23:20:03.698256018 +0200
+@@ -17,6 +17,7 @@ along with this library; if not, write t
+ // 'Group sockets'
+ // Implementation
+ 
++#include <stdint.h>
+ #include "Groupsock.hh"
+ #include "GroupsockHelper.hh"
+ //##### Eventually fix the following #include; we shouldn't know about tunnels
+@@ -401,7 +402,7 @@ int Groupsock::outputToAllMembersExcept(
+ 	= (TunnelEncapsulationTrailer*)&data[size];
+       TunnelEncapsulationTrailer* trailer;
+ 
+-      Boolean misaligned = ((unsigned long)trailerInPacket & 3) != 0;
++      Boolean misaligned = ((uintptr_t)trailerInPacket & 3) != 0;
+       unsigned trailerOffset;
+       u_int8_t tunnelCmd;
+       if (isSSM()) {
+diff -up live/liveMedia/MP3StreamState.cpp.vlc3 live/liveMedia/MP3StreamState.cpp
+--- live/liveMedia/MP3StreamState.cpp.vlc3	2011-09-02 22:52:41.000000000 +0200
++++ live/liveMedia/MP3StreamState.cpp	2011-09-19 23:20:03.699256170 +0200
+@@ -21,6 +21,7 @@ along with this library; if not, write t
+ #include "MP3StreamState.hh"
+ #include "InputFile.hh"
+ #include "GroupsockHelper.hh"
++#include <stdint.h>
+ 
+ #if defined(__WIN32__) || defined(_WIN32)
+ #define snprintf _snprintf
+@@ -36,8 +37,8 @@ MP3StreamState::~MP3StreamState() {
+   // Close our open file or socket:
+   if (fFid != NULL && fFid != stdin) {
+     if (fFidIsReallyASocket) {
+-      long fid_long = (long)fFid;
+-      closeSocket((int)fid_long);
++      intptr_t fid_long = (intptr_t)fFid;
++      closeSocket(fid_long);
+     } else {
+       CloseInputFile(fFid);
+     }
+@@ -192,7 +193,7 @@ void MP3StreamState::writeGetCmd(char co
+   char const* const getCmdFmt = "GET %s HTTP/1.1\r\nHost: %s:%d\r\n\r\n";
+ 
+   if (fFidIsReallyASocket) {
+-    long fid_long = (long)fFid;
++    intptr_t fid_long = (intptr_t)fFid;
+     int sock = (int)fid_long;
+     char writeBuf[100];
+ #if defined(IRIX) || defined(ALPHA) || defined(_QNX4) || defined(IMN_PIM) || defined(CRIS)
+@@ -391,7 +392,7 @@ unsigned MP3StreamState::readFromStream(
+ 					unsigned numChars) {
+   // Hack for doing socket I/O instead of file I/O (e.g., on Windows)
+   if (fFidIsReallyASocket) {
+-    long fid_long = (long)fFid;
++    intptr_t fid_long = (intptr_t)fFid;
+     int sock = (int)fid_long;
+     unsigned totBytesRead = 0;
+     do {
+diff -up live/liveMedia/RTCP.cpp.vlc3 live/liveMedia/RTCP.cpp
+--- live/liveMedia/RTCP.cpp.vlc3	2011-09-02 22:52:41.000000000 +0200
++++ live/liveMedia/RTCP.cpp	2011-09-19 23:20:03.700256322 +0200
+@@ -18,6 +18,7 @@ along with this library; if not, write t
+ // RTCP
+ // Implementation
+ 
++#include <stdint.h>
+ #include "RTCP.hh"
+ #include "GroupsockHelper.hh"
+ #include "rtcp_from_spec.h"
+@@ -81,14 +82,14 @@ void RTCPMemberDatabase::reapOldMembers(
+ 
+     HashTable::Iterator* iter
+       = HashTable::Iterator::create(*fTable);
+-    unsigned long timeCount;
++    uintptr_t timeCount;
+     char const* key;
+-    while ((timeCount = (unsigned long)(iter->next(key))) != 0) {
++    while ((timeCount = (uintptr_t)(iter->next(key))) != 0) {
+ #ifdef DEBUG
+       fprintf(stderr, "reap: checking SSRC 0x%lx: %ld (threshold %d)\n", (unsigned long)key, timeCount, threshold);
+ #endif
+-      if (timeCount < (unsigned long)threshold) { // this SSRC is old
+-        unsigned long ssrc = (unsigned long)key;
++      if (timeCount < (uintptr_t)threshold) { // this SSRC is old
++        intptr_t ssrc = (uintptr_t)key;
+         oldSSRC = (unsigned)ssrc;
+         foundOldMember = True;
+       }
