@@ -3,7 +3,7 @@
 
 Name:		live555
 Version:	0
-Release:	0.30.%{date}%{?dist}
+Release:	0.30.%{date}%{?dist}.1
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
@@ -193,6 +193,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libUsageEnvironment*.a
 
 %changelog
+* Sat Oct 08 2011 Nicolas Chauvet <kwizart@gmail.com> - 0-0.30.2011.01.24.1
+- Rebuilt for target i686
+
 * Tue Jan 25 2011 Nicolas Chauvet <kwizart@gmail.com> - 0-0.30.2011.01.24
 - Update to 2011.01.24
 - Update live555 patches from Rémi.
