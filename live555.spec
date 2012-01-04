@@ -1,9 +1,9 @@
-%global		date	2011.01.24
+%global		date	2011.11.20
 %global		live_soversion 0
 
 Name:		live555
 Version:	0
-Release:	0.30.%{date}%{?dist}.1
+Release:	0.33.%{date}%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
@@ -12,9 +12,11 @@ URL:		http://live555.com/liveMedia/
 Source0:	http://live555.com/liveMedia/public/live.%{date}.tar.gz
 Patch0:		live.2010.01.16-shared.patch
 #Thoses patches are Copyright Rémi Denis-Courmont - provided as GPLv2+
-Patch1:         live-getaddrinfo.patch
-Patch2:         live-inet_ntop.patch
-Patch3:         live-uselocale.patch
+Patch1:		live-uselocale.patch
+Patch2:		live-inet_ntop.patch
+Patch3:		live-intptr.patch
+Patch4:		live-getaddrinfo.patch
+Patch5:		live-cloexec.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Provides: live555date%{_isa} = %{date}
@@ -92,6 +94,8 @@ install -pm 0644 config.linux config.linux.static
 %patch1 -p1 -b .vlc1
 %patch2 -p1 -b .vlc2
 %patch3 -p1 -b .vlc3
+%patch4 -p1 -b .vlc4
+%patch5 -p1 -b .vlc5
 
 
 %build
@@ -193,8 +197,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libUsageEnvironment*.a
 
 %changelog
-* Sat Oct 08 2011 Nicolas Chauvet <kwizart@gmail.com> - 0-0.30.2011.01.24.1
-- Rebuilt for target i686
+* Mon Sep 19 2011 Nicolas Chauvet <kwizart@gmail.com> - 0-0.32.2011.09.02
+- Update to 2011.09.02
+- Reorder patches
+- Add live-cloexec.patch and live-intptr.patch (rebased) from Rémi.
 
 * Tue Jan 25 2011 Nicolas Chauvet <kwizart@gmail.com> - 0-0.30.2011.01.24
 - Update to 2011.01.24
