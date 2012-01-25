@@ -1,22 +1,16 @@
-%global		date	2011.09.02
+%global		date	2012.01.25
 %global		live_soversion 0
 
 Name:		live555
 Version:	0
-Release:	0.32.%{date}%{?dist}
+Release:	0.34.%{date}%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
-License:	LGPLv2+ and GPLv2+
+License:	LGPLv2+
 URL:		http://live555.com/liveMedia/
 Source0:	http://live555.com/liveMedia/public/live.%{date}.tar.gz
 Patch0:		live.2010.01.16-shared.patch
-#Thoses patches are Copyright Rémi Denis-Courmont - provided as GPLv2+
-Patch1:		live-uselocale.patch
-Patch2:		live-inet_ntop.patch
-Patch3:		live-intptr.patch
-Patch4:		live-getaddrinfo.patch
-Patch5:		live-cloexec.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Provides: live555date%{_isa} = %{date}
@@ -91,11 +85,6 @@ developing applications that use %{name}.
 %setup -q -n live
 install -pm 0644 config.linux config.linux.static
 %patch0 -p1 -b .shared
-%patch1 -p1 -b .vlc1
-%patch2 -p1 -b .vlc2
-%patch3 -p1 -b .vlc3
-%patch4 -p1 -b .vlc4
-%patch5 -p1 -b .vlc5
 
 
 %build
@@ -197,6 +186,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libUsageEnvironment*.a
 
 %changelog
+* Wed Jan 25 2012 Nicolas Chauvet <kwizart@gmail.com> - 0-0.34.2012.01.25
+- Update to 2012.01.25
+- Drop merged patch
+- Back to LGPLv+2 license
+
 * Mon Sep 19 2011 Nicolas Chauvet <kwizart@gmail.com> - 0-0.32.2011.09.02
 - Update to 2011.09.02
 - Reorder patches
