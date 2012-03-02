@@ -3,7 +3,7 @@
 
 Name:		live555
 Version:	0
-Release:	0.35.%{date}%{?dist}
+Release:	0.36.%{date}%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
@@ -186,6 +186,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libUsageEnvironment*.a
 
 %changelog
+* Fri Mar 02 2012 Nicolas Chauvet <kwizart@gmail.com> - 0-0.36.2012.02.04
+- Rebuilt for c++ ABI breakage
+
 * Sun Feb 19 2012 Nicolas Chauvet <kwizart@gmail.com> - 0-0.35.2012.02.04
 - Update to 2012.02.04
 
