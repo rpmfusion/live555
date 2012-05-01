@@ -1,16 +1,16 @@
-%global		date	2012.02.04
+%global		date	2012.04.27
 %global		live_soversion 0
 
 Name:		live555
 Version:	0
-Release:	0.36.%{date}%{?dist}
+Release:	0.37.%{date}%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
 License:	LGPLv2+
 URL:		http://live555.com/liveMedia/
 Source0:	http://live555.com/liveMedia/public/live.%{date}.tar.gz
-Patch0:		live.2010.01.16-shared.patch
+Patch0:		live.2012.04.27-shared.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Provides: live555date%{_isa} = %{date}
@@ -186,6 +186,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libUsageEnvironment*.a
 
 %changelog
+* Tue May 01 2012 Nicolas Chauvet <kwizart@gmail.com> - 0-0.37.2012.04.27
+- Update to 2012.04.27
+
 * Fri Mar 02 2012 Nicolas Chauvet <kwizart@gmail.com> - 0-0.36.2012.02.04
 - Rebuilt for c++ ABI breakage
 
