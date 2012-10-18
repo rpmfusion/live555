@@ -1,9 +1,9 @@
-%global		date	2012.04.27
+%global		date	2012.10.18
 %global		live_soversion 0
 
 Name:		live555
 Version:	0
-Release:	0.37.%{date}%{?dist}
+Release:	0.38.%{date}%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
@@ -186,6 +186,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libUsageEnvironment*.a
 
 %changelog
+* Thu Oct 18 2012 Nicolas Chauvet <kwizart@gmail.com> - 0-0.38.2012.10.18
+- Update to 2012.10.18
+
 * Tue May 01 2012 Nicolas Chauvet <kwizart@gmail.com> - 0-0.37.2012.04.27
 - Update to 2012.04.27
 
