@@ -1,21 +1,15 @@
-%global		date	2012.10.18
-%global		live_soversion 0
-
 Name:		live555
-Version:	0
-Release:	0.38.%{date}%{?dist}
+Version:	2013.01.19
+Release:	1%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
 License:	LGPLv2+
 URL:		http://live555.com/liveMedia/
-Source0:	http://live555.com/liveMedia/public/live.%{date}.tar.gz
-Patch0:		live.2012.04.27-shared.patch
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Source0:	http://live555.com/liveMedia/public/live.%{version}.tar.gz
 
-Provides: live555date%{_isa} = %{date}
 # Packages using live555 must Requires this:
-#{?live555date:Requires: live555date%{_isa} = %{live555date}}
+#{?live555_version:Requires: live555%{?_isa} = %{live555_version}}
 
 
 %description
@@ -33,7 +27,7 @@ been used to add streaming support to existing media player applications.
 %package	devel
 Summary:	Development files for live555.com streaming libraries
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 Obsoletes:	live-devel < 0-0.19.2008.04.03
 Provides:	live-devel = %{version}-%{release}
 
@@ -52,7 +46,7 @@ been used to add streaming support to existing media player applications.
 %package	tools
 Summary:	RTSP streaming tools using live555.com streaming libraries
 Group:		Applications/Multimedia
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 Obsoletes:	live-tools < 0-0.19.2008.04.03
 Provides:	live-tools = %{version}-%{release}
 
@@ -72,101 +66,45 @@ This package contains the live555.com streaming server
 (live555MediaServer), the example programs (openRTSP, playSIP, sapWatch,
 vobStreamer) and a variety of test tools.
 
-%package	static
-Summary:	Static libraries for %{name}
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-
-%description	static
-The %{name}-static package contains static libraries for
-developing applications that use %{name}.
 
 %prep
 %setup -q -n live
-install -pm 0644 config.linux config.linux.static
-%patch0 -p1 -b .shared
+sed -i -e "s/-O2/$RPM_OPT_FLAGS/" \
+  config.linux-with-shared-libraries
 
 
 %build
-./genMakefiles %{_target_os}.static
-make %{?_smp_mflags} CFLAGS="$RPM_OPT_FLAGS"
-mv $(find BasicUsageEnvironment groupsock liveMedia UsageEnvironment -name "*.a" ) $(pwd)
-make clean
+./genMakefiles %{_target_os}-with-shared-libraries
+make %{?_smp_mflags}
 
-./genMakefiles %{_target_os}
-make CFLAGS="$RPM_OPT_FLAGS -fPIC -DPIC" SO_VERSION="%{live_soversion}"
 
 %install
-rm -rf $RPM_BUILD_ROOT
-install -dm 755 $RPM_BUILD_ROOT{%{_libdir},%{_bindir}}
-for i in BasicUsageEnvironment groupsock liveMedia UsageEnvironment ; do
-  install -dm 755 $RPM_BUILD_ROOT%{_includedir}/$i
-  install -pm 644 $i/include/*.h* $RPM_BUILD_ROOT%{_includedir}/$i/
-  install -pm 644 lib${i}.a $RPM_BUILD_ROOT%{_libdir}/lib${i}.a
-  install -pm 755 $i/lib${i}.so $RPM_BUILD_ROOT%{_libdir}/lib${i}.so.%{date}
-  ln -sf lib${i}.so.%{date} $RPM_BUILD_ROOT%{_libdir}/lib${i}.so.%{live_soversion}
-  ln -sf lib${i}.so.%{date} $RPM_BUILD_ROOT%{_libdir}/lib${i}.so
-done
-
-install -pm755 mediaServer/live555MediaServer $RPM_BUILD_ROOT%{_bindir}
-
-pushd testProgs
-for i in \
-  MPEG2TransportStreamIndexer \
-  openRTSP \
-  playSIP \
-  sapWatch \
-  testAMRAudioStreamer \
-  testMP3Receiver \
-  testMP3Streamer \
-  testMPEG1or2AudioVideoStreamer \
-  testMPEG1or2AudioVideoToDarwin \
-  testMPEG1or2ProgramToTransportStream \
-  testMPEG1or2Splitter \
-  testMPEG1or2VideoReceiver \
-  testMPEG1or2VideoStreamer \
-  testMPEG2TransportStreamTrickPlay \
-  testMPEG2TransportStreamer \
-  testMPEG4VideoStreamer \
-  testMPEG4VideoToDarwin \
-  testOnDemandRTSPServer \
-  testRelay \
-  testWAVAudioStreamer \
-  vobStreamer \
-; do
-  install -pm755 $i $RPM_BUILD_ROOT%{_bindir}
-done
-popd
+make install DESTDIR=$RPM_BUILD_ROOT PREFIX=%{_prefix} LIBDIR=%{_libdir}
 
 #RPM Macros support
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/rpm
 cat > $RPM_BUILD_ROOT%{_sysconfdir}/rpm/macros.live555 << EOF
 # live555 RPM Macros
-%live555date	%{date}
+%live555_version	%{version}
 EOF
 touch -r COPYING $RPM_BUILD_ROOT%{_sysconfdir}/rpm/macros.live555
 
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
+
 %files
-%defattr(-,root,root,-)
 %{_libdir}/libBasicUsageEnvironment.so.*
 %{_libdir}/libgroupsock.so.*
 %{_libdir}/libliveMedia.so.*
 %{_libdir}/libUsageEnvironment.so.*
 
 %files tools
-%defattr(-,root,root,-)
 %{_bindir}/*
 
 %files devel
-%defattr(-,root,root,-)
 %doc COPYING README
 %config %{_sysconfdir}/rpm/macros.live555
 %{_libdir}/libBasicUsageEnvironment.so
@@ -178,14 +116,16 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/liveMedia/
 %{_includedir}/UsageEnvironment/
 
-%files static
-%defattr(-,root,root,644)
-%{_libdir}/libBasicUsageEnvironment*.a
-%{_libdir}/libgroupsock*.a
-%{_libdir}/libliveMedia*.a
-%{_libdir}/libUsageEnvironment*.a
 
 %changelog
+* Sun Jan 20 2013 Nicolas Chauvet <kwizart@gmail.com> - 2013.01.19-1
+- Update to 2013.01.19
+- Spec file cleanup
+- Drop upstreamed patches
+- Drop static built, not usefull with standard options
+- Rename the %%live555date macro to %%live555_version
+  Dependencies must use the later instead.
+
 * Thu Oct 18 2012 Nicolas Chauvet <kwizart@gmail.com> - 0-0.38.2012.10.18
 - Update to 2012.10.18
 
