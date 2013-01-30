@@ -1,5 +1,5 @@
 Name:		live555
-Version:	2013.01.19
+Version:	2013.01.25
 Release:	1%{?dist}
 Summary:	Live555.com streaming libraries
 
@@ -89,6 +89,9 @@ cat > $RPM_BUILD_ROOT%{_sysconfdir}/rpm/macros.live555 << EOF
 EOF
 touch -r COPYING $RPM_BUILD_ROOT%{_sysconfdir}/rpm/macros.live555
 
+#Fix library dependency detection
+chmod +x $RPM_BUILD_ROOT%{_libdir}/*.so*
+
 
 %post -p /sbin/ldconfig
 
@@ -118,6 +121,9 @@ touch -r COPYING $RPM_BUILD_ROOT%{_sysconfdir}/rpm/macros.live555
 
 
 %changelog
+* Wed Jan 30 2013 Nicolas Chauvet <kwizart@gmail.com> - 2013.01.25-1
+- Update to 2013.01.25
+
 * Sun Jan 20 2013 Nicolas Chauvet <kwizart@gmail.com> - 2013.01.19-1
 - Update to 2013.01.19
 - Spec file cleanup
