@@ -1,6 +1,6 @@
 Name:		live555
-Version:	2013.08.28
-Release:	3%{?dist}
+Version:	2013.11.26
+Release:	1%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
@@ -121,6 +121,9 @@ chmod +x $RPM_BUILD_ROOT%{_libdir}/*.so*
 
 
 %changelog
+* Thu Nov 28 2013 Nicolas Chauvet <kwizart@gmail.com> - 2013.11.26-1
+- Update to 2013.11.26
+
 * Mon Sep 30 2013 Nicolas Chauvet <kwizart@gmail.com> - 2013.08.28-3
 - Rebuilt
 
@@ -227,7 +230,7 @@ chmod +x $RPM_BUILD_ROOT%{_libdir}/*.so*
 - fix license tag
 - store changelog.txt locally, because the one on the website is constantly updated
 
-* Sun May 17 2007 Dominik Mierzejewski <rpm[AT]greysector.net> - 0-0.15.2007.04.24a
+* Thu May 17 2007 Dominik Mierzejewski <rpm[AT]greysector.net> - 0-0.15.2007.04.24a
 - 2007.04.24a
 - use Debian patches
 
