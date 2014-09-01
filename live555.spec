@@ -1,6 +1,6 @@
 Name:		live555
 Version:	2014.02.04
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
@@ -121,6 +121,9 @@ chmod +x $RPM_BUILD_ROOT%{_libdir}/*.so*
 
 
 %changelog
+* Mon Sep 01 2014 Sérgio Basto <sergio@serjux.com> - 2014.02.04-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
+
 * Tue Feb 04 2014 Nicolas Chauvet <kwizart@gmail.com> - 2014.02.04-1
 - Update to 2014.02.04
 
