@@ -69,7 +69,7 @@ vobStreamer) and a variety of test tools.
 
 %prep
 %setup -q -n live
-sed -i -e "s/-O2/$RPM_OPT_FLAGS/" \
+sed -i -e "s|-O2|$RPM_OPT_FLAGS|" \
   config.linux-with-shared-libraries
 
 
