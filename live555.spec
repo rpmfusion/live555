@@ -1,5 +1,5 @@
 Name:		live555
-Version:	2016.05.20
+Version:	2016.07.19
 Release:	1%{?dist}
 Summary:	Live555.com streaming libraries
 
@@ -121,6 +121,9 @@ chmod +x $RPM_BUILD_ROOT%{_libdir}/*.so*
 
 
 %changelog
+* Thu Jul 28 2016 Nicolas Chauvet <nicolas.chauvet@kwizart.fr> - 2016.07.19-1
+- Update to 2016.07.19
+
 * Sun May 22 2016 Nicolas Chauvet <kwizart@gmail.com> - 2016.05.20-1
 - Update to 2016.05.20
 
