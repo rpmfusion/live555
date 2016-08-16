@@ -1,6 +1,6 @@
 Name:		live555
 Version:	2016.07.19
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
@@ -75,7 +75,7 @@ sed -i -e "s|-O2|$RPM_OPT_FLAGS|" \
 
 %build
 ./genMakefiles %{_target_os}-with-shared-libraries
-make %{?_smp_mflags}
+make LDFLAGS="$RPM_LD_FLAGS" %{?_smp_mflags}
 
 
 %install
@@ -121,6 +121,9 @@ chmod +x $RPM_BUILD_ROOT%{_libdir}/*.so*
 
 
 %changelog
+* Tue Aug 16 2016 Leigh Scott <leigh123linux@googlemail.com> - 2016.07.19-3
+- Add hardening flags to LDFLAGS
+
 * Thu Jul 28 2016 Nicolas Chauvet <nicolas.chauvet@kwizart.fr> - 2016.07.19-2
 - Update to 2016.07.19
 
