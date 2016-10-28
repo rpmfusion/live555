@@ -1,6 +1,6 @@
 Name:		live555
-Version:	2016.07.19
-Release:	3%{?dist}
+Version:	2016.10.21
+Release:	1%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
@@ -121,6 +121,9 @@ chmod +x $RPM_BUILD_ROOT%{_libdir}/*.so*
 
 
 %changelog
+* Fri Oct 28 2016 Nicolas Chauvet <kwizart@gmail.com> - 2016.10.21-1
+- Update to 2016.10.21
+
 * Tue Aug 16 2016 Leigh Scott <leigh123linux@googlemail.com> - 2016.07.19-3
 - Add hardening flags to LDFLAGS
 
