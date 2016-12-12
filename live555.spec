@@ -1,5 +1,5 @@
 Name:		live555
-Version:	2016.10.21
+Version:	2016.11.28
 Release:	1%{?dist}
 Summary:	Live555.com streaming libraries
 
@@ -28,8 +28,6 @@ been used to add streaming support to existing media player applications.
 Summary:	Development files for live555.com streaming libraries
 Group:		Development/Libraries
 Requires:	%{name}%{?_isa} = %{version}-%{release}
-Obsoletes:	live-devel < 0-0.19.2008.04.03
-Provides:	live-devel = %{version}-%{release}
 
 %description	devel
 This code forms a set of C++ libraries for multimedia streaming, 
@@ -47,8 +45,6 @@ been used to add streaming support to existing media player applications.
 Summary:	RTSP streaming tools using live555.com streaming libraries
 Group:		Applications/Multimedia
 Requires:	%{name}%{?_isa} = %{version}-%{release}
-Obsoletes:	live-tools < 0-0.19.2008.04.03
-Provides:	live-tools = %{version}-%{release}
 
 %description	tools
 This code forms a set of C++ libraries for multimedia streaming, 
@@ -69,28 +65,28 @@ vobStreamer) and a variety of test tools.
 
 %prep
 %setup -q -n live
-sed -i -e "s|-O2|$RPM_OPT_FLAGS|" \
+sed -i -e "s|-O2|%{optflags}|" \
   config.linux-with-shared-libraries
 
 
 %build
 ./genMakefiles %{_target_os}-with-shared-libraries
-make LDFLAGS="$RPM_LD_FLAGS" %{?_smp_mflags}
+%make_build LDFLAGS="%{?__global_ldflags}"
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT PREFIX=%{_prefix} LIBDIR=%{_libdir}
+%make_install PREFIX=%{_prefix} LIBDIR=%{_libdir}
 
 #RPM Macros support
-mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/rpm
-cat > $RPM_BUILD_ROOT%{_sysconfdir}/rpm/macros.live555 << EOF
+mkdir -p %{buildroot}%{_sysconfdir}/rpm
+cat > %{buildroot}%{_sysconfdir}/rpm/macros.live555 << EOF
 # live555 RPM Macros
 %live555_version	%{version}
 EOF
-touch -r COPYING $RPM_BUILD_ROOT%{_sysconfdir}/rpm/macros.live555
+touch -r COPYING %{buildroot}%{_sysconfdir}/rpm/macros.live555
 
 #Fix library dependency detection
-chmod +x $RPM_BUILD_ROOT%{_libdir}/*.so*
+chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %post -p /sbin/ldconfig
@@ -121,6 +117,10 @@ chmod +x $RPM_BUILD_ROOT%{_libdir}/*.so*
 
 
 %changelog
+* Mon Dec 12 2016 Nicolas Chauvet <kwizart@gmail.com> - 2016.11.28-1
+- Update to 2016.11.28
+- Switch to RPM based macros
+
 * Fri Oct 28 2016 Nicolas Chauvet <kwizart@gmail.com> - 2016.10.21-1
 - Update to 2016.10.21
 
