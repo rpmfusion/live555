@@ -1,5 +1,5 @@
 Name:		live555
-Version:	2016.11.28
+Version:	2017.01.26
 Release:	1%{?dist}
 Summary:	Live555.com streaming libraries
 
@@ -117,6 +117,10 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %changelog
+* Mon Feb 20 2017 Nicolas Chauvet <kwizart@gmail.com> - 2017.01.26-1
+- Update to 2017.01.26
+- Switch to %%{rpmmacrodir}
+
 * Mon Dec 12 2016 Nicolas Chauvet <kwizart@gmail.com> - 2016.11.28-1
 - Update to 2016.11.28
 - Switch to RPM based macros
