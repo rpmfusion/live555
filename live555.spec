@@ -78,12 +78,12 @@ sed -i -e "s|-O2|%{optflags}|" \
 %make_install PREFIX=%{_prefix} LIBDIR=%{_libdir}
 
 #RPM Macros support
-mkdir -p %{buildroot}%{_sysconfdir}/rpm
-cat > %{buildroot}%{_sysconfdir}/rpm/macros.live555 << EOF
+mkdir -p %{buildroot}%{rpmmacrodir}
+cat > %{buildroot}%{rpmmacrodir}/macros.%{name} << EOF
 # live555 RPM Macros
 %live555_version	%{version}
 EOF
-touch -r COPYING %{buildroot}%{_sysconfdir}/rpm/macros.live555
+touch -r COPYING %{buildroot}%{rpmmacrodir}/macros.%{name}
 
 #Fix library dependency detection
 chmod +x %{buildroot}%{_libdir}/*.so*
@@ -105,7 +105,7 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 %files devel
 %doc COPYING README
-%config %{_sysconfdir}/rpm/macros.live555
+%{rpmmacrodir}/macros.%{name}
 %{_libdir}/libBasicUsageEnvironment.so
 %{_libdir}/libgroupsock.so
 %{_libdir}/libliveMedia.so
