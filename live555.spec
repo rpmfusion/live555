@@ -67,6 +67,7 @@ vobStreamer) and a variety of test tools.
 %setup -q -n live
 sed -i -e "s|-O2|%{optflags}|" \
   config.linux-with-shared-libraries
+sed -i '/xlocale.h/d' liveMedia/include/Locale.hh
 
 
 %build
@@ -119,6 +120,8 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 %changelog
 * Sun Jul 16 2017 Alexandre Detiste <alexandre@detiste.be> - 2017.06.04-1
 - New release
+- Use sed to out include of obsolete 'xlocale.h'
+  https://bugzilla.redhat.com/show_bug.cgi?id=1464640
 
 * Tue May 23 2017 Alexandre Detiste <alexandre@detiste.be> - 2017.04.26-1
 - New release
