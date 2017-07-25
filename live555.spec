@@ -1,5 +1,5 @@
 Name:		live555
-Version:	2017.06.04
+Version:	2017.07.18
 Release:	1%{?dist}
 Summary:	Live555.com streaming libraries
 
@@ -118,6 +118,9 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %changelog
+* Tue Jul 25 2017 Alexandre Detiste <alexandre@detiste.be> - 2017.07.18-1
+- Update to 2017.07.18
+
 * Sun Jul 16 2017 Alexandre Detiste <alexandre@detiste.be> - 2017.06.04-1
 - New release
 - Use sed to out include of obsolete 'xlocale.h'
