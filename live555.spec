@@ -1,6 +1,6 @@
 Name:		live555
-Version:	2017.07.18
-Release:	2%{?dist}
+Version:	2017.09.12
+Release:	1%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
@@ -118,6 +118,9 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %changelog
+* Sun Sep 24 2017 Alexandre Detiste <alexandre@detiste.be> - 2017.09.12-1
+- Update to 2017.09.12
+
 * Thu Aug 31 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 2017.07.18-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 
