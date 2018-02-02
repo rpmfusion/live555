@@ -1,5 +1,5 @@
 Name:		live555
-Version:	2017.10.28
+Version:	2018.01.29
 Release:	1%{?dist}
 Summary:	Live555.com streaming libraries
 
@@ -118,6 +118,9 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %changelog
+* Fri Feb 02 2018 Alexandre Detiste <alexandre@detiste.be> - 2018.01.29-1
+- Update to 2018.01.29
+
 * Fri Nov 24 2017 Alexandre Detiste <alexandre@detiste.be> - 2017.10.28-1
 - Update to 2017.10.28
 
