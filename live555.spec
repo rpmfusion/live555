@@ -1,6 +1,6 @@
 Name:		live555
 Version:	2018.02.18
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Live555.com streaming libraries
 
 Group:		System Environment/Libraries
@@ -67,7 +67,6 @@ vobStreamer) and a variety of test tools.
 %setup -q -n live
 sed -i -e "s|-O2|%{optflags}|" \
   config.linux-with-shared-libraries
-sed -i '/xlocale.h/d' liveMedia/include/Locale.hh
 
 
 %build
@@ -118,6 +117,10 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %changelog
+* Sun Feb 25 2018 Alexandre Detiste <alexandre@detiste.be> - 2018.02.18-2
+- Remove workaround for 'xlocale.h' introduced in 2017.06.04-1,
+  not needed anymore
+
 * Sun Feb 25 2018 Alexandre Detiste <alexandre@detiste.be> - 2018.02.18-1
 - Update to 2018.02.18
 
