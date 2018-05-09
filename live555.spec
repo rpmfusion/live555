@@ -1,5 +1,5 @@
 Name:		live555
-Version:	2018.02.28
+Version:	2018.04.25
 Release:	1%{?dist}
 Summary:	Live555.com streaming libraries
 
@@ -117,6 +117,9 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %changelog
+* Tue May 09 2018 Alexandre Detiste <alexandre@detiste.be> - 2018.04.25-1
+- Update to 2018.04.25
+
 * Sun Mar 11 2018 Alexandre Detiste <alexandre@detiste.be> - 2018.02.28-1
 - Update to 2018.02.28
 - Remove workaround for 'xlocale.h' introduced in 2017.06.04-1,
