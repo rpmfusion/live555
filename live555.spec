@@ -117,7 +117,7 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %changelog
-* Tue May 09 2018 Alexandre Detiste <alexandre@detiste.be> - 2018.04.25-1
+* Thu May 10 2018 Alexandre Detiste <alexandre@detiste.be> - 2018.04.25-1
 - Update to 2018.04.25
 
 * Sun Mar 11 2018 Alexandre Detiste <alexandre@detiste.be> - 2018.02.28-1
