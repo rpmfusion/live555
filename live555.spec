@@ -1,12 +1,11 @@
 Name:		live555
-Version:	2018.04.25
-Release:	1%{?dist}
+Version:	2018.07.07
+Release:	0%{?dist}
 Summary:	Live555.com streaming libraries
 
-Group:		System Environment/Libraries
 License:	LGPLv2+
 URL:		http://live555.com/liveMedia/
-Source0:	http://live555.com/liveMedia/public/live.%{version}.tar.gz
+Source0:	%{url}/public/live.%{version}.tar.gz
 
 # Packages using live555 must Requires this:
 #{?live555_version:Requires: live555%{?_isa} = %{live555_version}}
@@ -26,7 +25,6 @@ been used to add streaming support to existing media player applications.
 
 %package	devel
 Summary:	Development files for live555.com streaming libraries
-Group:		Development/Libraries
 Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 %description	devel
@@ -43,7 +41,6 @@ been used to add streaming support to existing media player applications.
 
 %package	tools
 Summary:	RTSP streaming tools using live555.com streaming libraries
-Group:		Applications/Multimedia
 Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 %description	tools
@@ -89,12 +86,11 @@ touch -r COPYING %{buildroot}%{rpmmacrodir}/macros.%{name}
 chmod +x %{buildroot}%{_libdir}/*.so*
 
 
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
+%ldconfig_scriptlets
 
 
 %files
+%license COPYING
 %{_libdir}/libBasicUsageEnvironment.so.*
 %{_libdir}/libgroupsock.so.*
 %{_libdir}/libliveMedia.so.*
@@ -104,7 +100,7 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 %{_bindir}/*
 
 %files devel
-%doc COPYING README
+%doc README
 %{rpmmacrodir}/macros.%{name}
 %{_libdir}/libBasicUsageEnvironment.so
 %{_libdir}/libgroupsock.so
