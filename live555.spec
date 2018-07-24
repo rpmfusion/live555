@@ -1,6 +1,6 @@
 Name:		live555
 Version:	2018.07.07
-Release:	0%{?dist}
+Release:	1%{?dist}
 Summary:	Live555.com streaming libraries
 
 License:	LGPLv2+
@@ -8,7 +8,7 @@ URL:		http://live555.com/liveMedia/
 Source0:	%{url}/public/live.%{version}.tar.gz
 
 # Packages using live555 must Requires this:
-#{?live555_version:Requires: live555%{?_isa} = %{live555_version}}
+#%%{?live555_version:Requires: live555%%{?_isa} = %%{live555_version}}
 
 
 %description
@@ -113,6 +113,9 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %changelog
+* Tue Jul 24 2018 Nicolas Chauvet <kwizart@gmail.com> - 2018.07.07-1
+- Update to 2018.07.07
+
 * Thu May 10 2018 Alexandre Detiste <alexandre@detiste.be> - 2018.04.25-1
 - Update to 2018.04.25
 
