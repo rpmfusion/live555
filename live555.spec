@@ -1,5 +1,5 @@
 Name:		live555
-Version:	2018.10.17
+Version:	2019.02.03
 Release:	1%{?dist}
 Summary:	Live555.com streaming libraries
 
@@ -115,6 +115,9 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %changelog
+* Tue Feb 26 2019 Nicolas Chauvet <kwizart@gmail.com> - 2019.02.03-1
+- Update to 2019.02.03
+
 * Sat Oct 20 2018 Nicolas Chauvet <kwizart@gmail.com> - 2018.10.17-1
 - Update to 2018.10.17
 
