@@ -1,6 +1,6 @@
 Name:		live555
 Version:	2019.02.03
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Live555.com streaming libraries
 
 License:	LGPLv2+
@@ -115,6 +115,9 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %changelog
+* Mon Mar 04 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2019.02.03-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
 * Tue Feb 26 2019 Nicolas Chauvet <kwizart@gmail.com> - 2019.02.03-1
 - Update to 2019.02.03
 
