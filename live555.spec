@@ -1,6 +1,6 @@
 Name:		live555
-Version:	2019.03.06
-Release:	1%{?dist}
+Version:	2019.05.29
+Release:	0%{?dist}
 Summary:	Live555.com streaming libraries
 
 License:	LGPLv2+
