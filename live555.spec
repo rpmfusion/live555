@@ -1,6 +1,6 @@
 Name:		live555
-Version:	2019.06.28
-Release:	2%{?dist}
+Version:	2019.07.27
+Release:	1%{?dist}
 Summary:	Live555.com streaming libraries
 
 License:	LGPLv2+
@@ -115,6 +115,9 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %changelog
+* Tue Aug 06 2019 Nicolas Chauvet <kwizart@gmail.com> - 2019.07.27-1
+- Update to 2019.07.27
+
 * Mon Jul 22 2019 Nicolas Chauvet <kwizart@gmail.com> - 2019.06.28-2
 - Rebuilt
 
