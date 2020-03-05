@@ -8,6 +8,7 @@ URL:		http://live555.com/liveMedia/
 Source0:	%{url}/public/live.%{version}.tar.gz
 
 BuildRequires:  gcc-c++
+BuildRequires:  openssl-devel
 
 # Packages using live555 must Requires this:
 #%%{?live555_version:Requires: live555%%{?_isa} = %%{live555_version}}
