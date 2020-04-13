@@ -94,10 +94,10 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 %files
 %license COPYING
-%{_libdir}/libBasicUsageEnvironment.so.*
-%{_libdir}/libgroupsock.so.*
-%{_libdir}/libliveMedia.so.*
-%{_libdir}/libUsageEnvironment.so.*
+%{_libdir}/libBasicUsageEnvironment.so.1*
+%{_libdir}/libgroupsock.so.8*
+%{_libdir}/libliveMedia.so.79*
+%{_libdir}/libUsageEnvironment.so.3*
 
 %files tools
 %{_bindir}/*
