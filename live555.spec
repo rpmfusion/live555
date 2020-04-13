@@ -1,5 +1,5 @@
 Name:		live555
-Version:	2020.02.25
+Version:	2020.04.12
 Release:	1%{?dist}
 Summary:	Live555.com streaming libraries
 
@@ -116,6 +116,9 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %changelog
+* Mon Apr 13 2020 Nicolas Chauvet <kwizart@gmail.com> - 2020.04.12-1
+- Update to 2020.04.12
+
 * Thu Mar 05 2020 Nicolas Chauvet <kwizart@gmail.com> - 2020.02.25-1
 - Update to 2020.02.25
 
