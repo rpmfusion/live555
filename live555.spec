@@ -1,6 +1,6 @@
 Name:		live555
 Version:	2020.07.31
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Live555.com streaming libraries
 
 License:	LGPLv2+
@@ -116,6 +116,9 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %changelog
+* Wed Feb 03 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2020.07.31-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Tue Aug 18 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2020.07.31-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
