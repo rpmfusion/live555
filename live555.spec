@@ -1,6 +1,6 @@
 Name:		live555
-Version:	2020.07.31
-Release:	4%{?dist}
+Version:	2022.01.06
+Release:	1%{?dist}
 Summary:	Live555.com streaming libraries
 
 License:	LGPLv2+
@@ -95,8 +95,8 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 %files
 %license COPYING
 %{_libdir}/libBasicUsageEnvironment.so.1*
-%{_libdir}/libgroupsock.so.8*
-%{_libdir}/libliveMedia.so.79*
+%{_libdir}/libgroupsock.so.30*
+%{_libdir}/libliveMedia.so.103*
 %{_libdir}/libUsageEnvironment.so.3*
 
 %files tools
@@ -116,6 +116,9 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %changelog
+* Sun Jan 09 2022 Sérgio Basto <sergio@serjux.com> - 2022.01.06-1
+- Update live555 to 2022.01.06
+
 * Tue Aug 03 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2020.07.31-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 
