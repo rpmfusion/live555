@@ -1,6 +1,6 @@
 Name:		live555
 Version:	2022.01.06
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Live555.com streaming libraries
 
 License:	LGPLv2+
@@ -116,6 +116,9 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %changelog
+* Wed Feb 09 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 2022.01.06-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
+
 * Sun Jan 09 2022 Sérgio Basto <sergio@serjux.com> - 2022.01.06-1
 - Update live555 to 2022.01.06
 
