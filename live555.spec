@@ -1,5 +1,5 @@
 Name:		live555
-Version:	2022.02.07
+Version:	2022.07.14
 Release:	1%{?dist}
 Summary:	Live555.com streaming libraries
 
@@ -96,7 +96,7 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 %license COPYING
 %{_libdir}/libBasicUsageEnvironment.so.1*
 %{_libdir}/libgroupsock.so.30*
-%{_libdir}/libliveMedia.so.106*
+%{_libdir}/libliveMedia.so.107*
 %{_libdir}/libUsageEnvironment.so.3*
 
 %files tools
@@ -116,6 +116,9 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %changelog
+* Fri Jul 15 2022 Leigh Scott <leigh123linux@gmail.com> - 2022.07.14-1
+- Update to 2022.07.14
+
 * Tue Feb 22 2022 Nicolas Chauvet <kwizart@gmail.com> - 2022.02.07-1
 - Update to 2022.02.07
 
