@@ -1,6 +1,6 @@
 Name:		live555
 Version:	2022.07.14
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Live555.com streaming libraries
 
 License:	LGPLv2+
@@ -116,6 +116,10 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %changelog
+* Sun Aug 07 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 2022.07.14-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild and ffmpeg
+  5.1
+
 * Fri Jul 15 2022 Leigh Scott <leigh123linux@gmail.com> - 2022.07.14-1
 - Update to 2022.07.14
 
