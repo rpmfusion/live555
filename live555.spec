@@ -1,5 +1,5 @@
 Name:		live555
-Version:	2022.10.01
+Version:	2023.03.30
 Release:	1%{?dist}
 Summary:	Live555.com streaming libraries
 
@@ -94,7 +94,7 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 %files
 %license COPYING
-%{_libdir}/libBasicUsageEnvironment.so.1*
+%{_libdir}/libBasicUsageEnvironment.so.2*
 %{_libdir}/libgroupsock.so.30*
 %{_libdir}/libliveMedia.so.107*
 %{_libdir}/libUsageEnvironment.so.3*
@@ -116,6 +116,9 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %changelog
+* Mon Apr 10 2023 Leigh Scott <leigh123linux@gmail.com> - 2023.03.30-1
+- Update to 2023.03.30
+
 * Sun Nov 06 2022 Leigh Scott <leigh123linux@gmail.com> - 2022.10.01-1
 - Update to 2022.10.01
 
