@@ -1,6 +1,6 @@
 Name:		live555
 Version:	2023.03.30
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	Live555.com streaming libraries
 
 License:	LGPLv2+
@@ -116,6 +116,9 @@ chmod +x %{buildroot}%{_libdir}/*.so*
 
 
 %changelog
+* Wed Aug 02 2023 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 2023.03.30-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_39_Mass_Rebuild
+
 * Mon Apr 10 2023 Leigh Scott <leigh123linux@gmail.com> - 2023.03.30-1
 - Update to 2023.03.30
 
